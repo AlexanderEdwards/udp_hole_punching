@@ -9,4 +9,4 @@ const server = net.createServer(s => {
 })
 
 
-server.listen('138.68.12.66', 8080);
+server.listen(8080);
