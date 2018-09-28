@@ -6,7 +6,7 @@ class Socket {
         this.onClose();
         this.intervalId = null;
         this.printUsers();
-        
+
     }
 
     onData() {
@@ -14,14 +14,20 @@ class Socket {
             const query = JSON.parse(data.toString());
             switch (query.type) {
                 case ('getUser'):
-                    if(this.users[query.payload])
+                    const user = this.users[query.payload];
+                    if (user)
                         this.socket.write(JSON.stringify(this.users[query.payload]))
+                    this.sendData(user.socket, 'connectRequest', JSON.stringify({
+                        host: this.socket.remoteAddress,
+                        port: this.socket.port
+                    }))
                     break;
                 case ('setUser'):
                     this.username = query.payload;
                     this.users[this.username] = {
                         ip: this.socket.remoteAddress,
-                        port: this.socket.remotePort
+                        port: this.socket.remotePort,
+                        socket: this.socket
                     }
                     break;
             }
@@ -40,6 +46,15 @@ class Socket {
             console.log(this.users);
         }, 5000);
     }
+
+    sendData(socket, type, payload) {
+        socket.write(JSON.stringify({
+            type: type,
+            payload: payload
+        }))
+    }
 }
+
+
 
 module.exports.socket = Socket;

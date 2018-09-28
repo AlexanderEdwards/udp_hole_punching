@@ -12,7 +12,12 @@ server.on('listening', () => {
     });
 
     socket.on('data', data => {
-        console.log(getData(data));
+        const data = JSON.parse(data.toString());
+        switch(data.payload){
+            case('connectRequest'):
+                console.log(data);
+
+        }
     })
 
     process.stdin.on('data', data => {
