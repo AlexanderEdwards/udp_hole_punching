@@ -19,10 +19,10 @@ class Socket {
                     console.log(query.payload);
                     if (user) {
                         this.socket.write(JSON.stringify(this.users[query.payload]))
-                        this.sendData(user.socket, 'connectRequest', JSON.stringify({
+                        this.sendData(user.socket, 'connectRequest', {
                             host: this.socket.remoteAddress,
                             port: this.socket.port
-                        }))
+                        })
                     }
                     break;
                 case ('setUser'):
