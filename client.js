@@ -1,5 +1,6 @@
 const net = require('net');
 const username = process.argv[2];
+const port = process.argv[3];
 const dgram = require('dgram');
 const server = dgram.createSocket('udp4');
 
@@ -43,5 +44,5 @@ function sendData(socket, type, payload) {
     }))
 }
 
-server.bind(3000);
+server.bind(port);
 

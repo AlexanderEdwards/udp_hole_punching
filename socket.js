@@ -15,12 +15,13 @@ class Socket {
             switch (query.type) {
                 case ('getUser'):
                     const user = this.users[query.payload];
-                    if (user)
+                    if (user) {
                         this.socket.write(JSON.stringify(this.users[query.payload]))
-                    this.sendData(user.socket, 'connectRequest', JSON.stringify({
+                        this.sendData(user.socket, 'connectRequest', JSON.stringify({
                             host: this.socket.remoteAddress,
                             port: this.socket.port
                         }))
+                    }
                     break;
                 case ('setUser'):
                     this.username = query.payload;
@@ -46,9 +47,9 @@ class Socket {
             console.log({
                 username: this.username,
                 ip: this.socket.remoteAddress,
-                port: this.socket.port
+                port: this.socket.remotePort
             });
-            
+
         }, 5000);
     }
 
