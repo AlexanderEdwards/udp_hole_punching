@@ -12,7 +12,7 @@ class Socket {
             this.username = data.toString();
             this.users[this.username] = {
                 ip: this.socket.remoteAddress,
-                port: his.socket.remotePort
+                port: this.socket.remotePort
             }
         })
     }
