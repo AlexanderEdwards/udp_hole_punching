@@ -15,10 +15,8 @@ class Socket {
             switch (query.type) {
                 case ('getUser'):
                     const user = this.users[query.payload];
-                    console.log(query);
-                    console.log(query.payload);
+        
                     if (user) {
-                        this.socket.write(JSON.stringify(this.users[query.payload]))
                         this.sendData(user.socket, 'connectRequest', {
                             host: this.socket.remoteAddress,
                             port: this.socket.port
