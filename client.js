@@ -16,9 +16,10 @@ server.on('listening', () => {
     })
 
     process.stdin.on('data', data => {
+        console.log(data);
         const userQuery = "QUERY USERNAME:";
-        if(getData(data).contains(userQuery))
-            sendData(socket, "getUser", data.split(userQuery)[1])
+        if(getData(data).includes(userQuery))
+            sendData(socket, "getUser", data.toString().trim().split(userQuery)[1])
     })
 })
 

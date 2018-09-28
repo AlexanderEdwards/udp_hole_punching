@@ -4,7 +4,9 @@ class Socket {
         this.users = users;
         this.onData();
         this.onClose();
+        this.intervalId = null;
         this.printUsers();
+        
     }
 
     onData() {
@@ -12,7 +14,8 @@ class Socket {
             const query = JSON.parse(data.toString());
             switch (query.type) {
                 case ('getUser'):
-                    this.socket.write(JSON.stringify(this.users[query.payload]))
+                    if(this.users[query.payload])
+                        this.socket.write(JSON.stringify(this.users[query.payload]))
                     break;
                 case ('setUser'):
                     this.username = query.payload;
@@ -28,11 +31,12 @@ class Socket {
     onClose() {
         this.socket.on('end', close => {
             delete this.users[this.username];
+            clearInterval(this.intervalId);
         })
     }
 
     printUsers() {
-        setInterval(() => {
+        this.intervalId = setInterval(() => {
             console.log(this.users);
         }, 5000);
     }
