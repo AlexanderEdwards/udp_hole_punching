@@ -1,5 +1,5 @@
 class Socket {
-    constructor(socket, users){
+    constructor(socket, users) {
         this.socket = socket;
         this.users = users;
         this.onData();
@@ -7,24 +7,32 @@ class Socket {
         this.printUsers();
     }
 
-    onData(){
+    onData() {
         this.socket.on('data', data => {
-            this.username = data.toString();
-            this.users[this.username] = {
-                ip: this.socket.remoteAddress,
-                port: this.socket.remotePort
+            const query = JSON.parse(data.toString());
+            switch (query.type) {
+                case ('getUser'):
+                    this.socket.write(JSON.stringify(this.users[query.payload]))
+                    break;
+                case ('setUser'):
+                    this.username = query.payload;
+                    this.users[this.username] = {
+                        ip: this.socket.remoteAddress,
+                        port: this.socket.remotePort
+                    }
+                    break;
             }
         })
     }
 
     onClose() {
-        this.socket.on('end', close => { 
+        this.socket.on('end', close => {
             delete this.users[this.username];
         })
     }
 
     printUsers() {
-        setInterval(() =>{
+        setInterval(() => {
             console.log(this.users);
         }, 5000);
     }
