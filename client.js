@@ -11,8 +11,8 @@ server.on('listening', () => {
         sendData(socket, "setUser", username);
     });
 
-    socket.on('data', data => {
-        const data = JSON.parse(data.toString());
+    socket.on('data', d => {
+        const data = JSON.parse(d.toString());
         switch(data.payload){
             case('connectRequest'):
                 console.log(data);
