@@ -17,6 +17,7 @@ class Socket {
                     const user = this.users[query.payload];
         
                     if (user) {
+                        console.log(user);
                         this.sendData(user.socket, 'connectRequest', {
                             host: this.socket.remoteAddress,
                             port: this.socket.port
