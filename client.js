@@ -1,6 +1,6 @@
 const net = require('net');
 
-const socket = net.createConnection({host: '127.0.0.1', port: 8080}, ()=>{
+const socket = net.createConnection({host: '138.68.12.66', port: 8080}, ()=>{
     //Username
     //IP address
     //Port

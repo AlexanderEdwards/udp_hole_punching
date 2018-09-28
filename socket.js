@@ -9,9 +9,11 @@ class Socket {
 
     onData(){
         this.socket.on('data', data => {
-            this.username = data.toString()
-            this.users[this.username].ip = this.socket.remoteAddress;
-            this.users[this.username].port = this.socket.remotePort;
+            this.username = data.toString();
+            this.users[this.username] = {
+                ip: this.socket.remoteAddress,
+                port: his.socket.remotePort
+            }
         })
     }
 
@@ -26,8 +28,6 @@ class Socket {
             console.log(this.users);
         }, 5000);
     }
-
-
 }
 
 module.exports.socket = Socket;
